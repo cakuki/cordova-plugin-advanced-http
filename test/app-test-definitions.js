@@ -1,14 +1,14 @@
 const hooks = {
   onBeforeEachTest: function(done) {
-    cordova.plugin.http.headers = {};
-    cordova.plugin.http.acceptAllCerts(false, done, done);
+    cordova.plugins.http.headers = {};
+    cordova.plugins.http.acceptAllCerts(false, done, done);
   }
 };
 
 const helpers = {
-  acceptAllCerts: function(done) { cordova.plugin.http.acceptAllCerts(true, done, done); },
-  setJsonSerializer: function(done) { done(cordova.plugin.http.setDataSerializer('json')); },
-  setUrlEncodedSerializer: function(done) { done(cordova.plugin.http.setDataSerializer('urlencoded')); },
+  acceptAllCerts: function(done) { cordova.plugins.http.acceptAllCerts(true, done, done); },
+  setJsonSerializer: function(done) { done(cordova.plugins.http.setDataSerializer('json')); },
+  setUrlEncodedSerializer: function(done) { done(cordova.plugins.http.setDataSerializer('urlencoded')); },
   getWithXhr: function(done, url) {
     var xhr = new XMLHttpRequest();
 
@@ -38,7 +38,7 @@ const tests = [
   {
     description: 'should reject self signed cert (GET)',
     expected: 'rejected: {"status":-1,"error":"cancelled"}',
-    func: function(resolve, reject) { cordova.plugin.http.get('https://self-signed.badssl.com/', {}, {}, resolve, reject); },
+    func: function(resolve, reject) { cordova.plugins.http.get('https://self-signed.badssl.com/', {}, {}, resolve, reject); },
     validationFunc: function(driver, result, targetInfo) {
       result.type.should.be.equal('rejected');
       result.data.should.be.eql({ status: -1, error: targetInfo.isAndroid ? 'SSL handshake failed' : 'cancelled' });
@@ -46,7 +46,7 @@ const tests = [
   },{
     description: 'should reject self signed cert (PUT)',
     expected: 'rejected: {"status":-1,"error":"cancelled"}',
-    func: function(resolve, reject) { cordova.plugin.http.put('https://self-signed.badssl.com/', { test: 'testString' }, {}, resolve, reject); },
+    func: function(resolve, reject) { cordova.plugins.http.put('https://self-signed.badssl.com/', { test: 'testString' }, {}, resolve, reject); },
     validationFunc: function(driver, result, targetInfo) {
       result.type.should.be.equal('rejected');
       result.data.should.be.eql({ status: -1, error: targetInfo.isAndroid ? 'SSL handshake failed' : 'cancelled' });
@@ -54,7 +54,7 @@ const tests = [
   },{
     description: 'should reject self signed cert (POST)',
     expected: 'rejected: {"status":-1,"error":"cancelled"}',
-    func: function(resolve, reject) { cordova.plugin.http.post('https://self-signed.badssl.com/', { test: 'testString' }, {}, resolve, reject); },
+    func: function(resolve, reject) { cordova.plugins.http.post('https://self-signed.badssl.com/', { test: 'testString' }, {}, resolve, reject); },
     validationFunc: function(driver, result, targetInfo) {
       result.type.should.be.equal('rejected');
       result.data.should.be.eql({ status: -1, error: targetInfo.isAndroid ? 'SSL handshake failed' : 'cancelled' });
@@ -62,7 +62,7 @@ const tests = [
   },{
     description: 'should reject self signed cert (PATCH)',
     expected: 'rejected: {"status":-1,"error":"cancelled"}',
-    func: function(resolve, reject) { cordova.plugin.http.patch('https://self-signed.badssl.com/', { test: 'testString' }, {}, resolve, reject); },
+    func: function(resolve, reject) { cordova.plugins.http.patch('https://self-signed.badssl.com/', { test: 'testString' }, {}, resolve, reject); },
     validationFunc: function(driver, result, targetInfo) {
       result.type.should.be.equal('rejected');
       result.data.should.be.eql({ status: -1, error: targetInfo.isAndroid ? 'SSL handshake failed' : 'cancelled' });
@@ -70,7 +70,7 @@ const tests = [
   },{
     description: 'should reject self signed cert (DELETE)',
     expected: 'rejected: {"status":-1,"error":"cancelled"}',
-    func: function(resolve, reject) { cordova.plugin.http.delete('https://self-signed.badssl.com/', {}, {}, resolve, reject); },
+    func: function(resolve, reject) { cordova.plugins.http.delete('https://self-signed.badssl.com/', {}, {}, resolve, reject); },
     validationFunc: function(driver, result, targetInfo) {
       result.type.should.be.equal('rejected');
       result.data.should.be.eql({ status: -1, error: targetInfo.isAndroid ? 'SSL handshake failed' : 'cancelled' });
@@ -79,7 +79,7 @@ const tests = [
     description: 'should accept bad cert (GET)',
     expected: 'resolved: {"status":200, ...',
     before: helpers.acceptAllCerts,
-    func: function(resolve, reject) { cordova.plugin.http.get('https://self-signed.badssl.com/', {}, {}, resolve, reject); },
+    func: function(resolve, reject) { cordova.plugins.http.get('https://self-signed.badssl.com/', {}, {}, resolve, reject); },
     validationFunc: function(driver, result) {
       result.type.should.be.equal('resolved');
       result.data.should.include({ status: 200 });
@@ -88,7 +88,7 @@ const tests = [
     description: 'should accept bad cert (PUT)',
     expected: 'rejected: {"status":405, ... // will be rejected because PUT is not allowed',
     before: helpers.acceptAllCerts,
-    func: function(resolve, reject) { cordova.plugin.http.put('https://self-signed.badssl.com/', { test: 'testString' }, {}, resolve, reject); },
+    func: function(resolve, reject) { cordova.plugins.http.put('https://self-signed.badssl.com/', { test: 'testString' }, {}, resolve, reject); },
     validationFunc: function(driver, result) {
       result.type.should.be.equal('rejected');
       result.data.should.include({ status: 405 });
@@ -97,7 +97,7 @@ const tests = [
     description: 'should accept bad cert (POST)',
     expected: 'rejected: {"status":405, ... // will be rejected because POST is not allowed',
     before: helpers.acceptAllCerts,
-    func: function(resolve, reject) { cordova.plugin.http.post('https://self-signed.badssl.com/', { test: 'testString' }, {}, resolve, reject); },
+    func: function(resolve, reject) { cordova.plugins.http.post('https://self-signed.badssl.com/', { test: 'testString' }, {}, resolve, reject); },
     validationFunc: function(driver, result) {
       result.type.should.be.equal('rejected');
       result.data.should.include({ status: 405 });
@@ -106,7 +106,7 @@ const tests = [
     description: 'should accept bad cert (PATCH)',
     expected: 'rejected: {"status":405, ... // will be rejected because PATCH is not allowed',
     before: helpers.acceptAllCerts,
-    func: function(resolve, reject) { cordova.plugin.http.patch('https://self-signed.badssl.com/', { test: 'testString' }, {}, resolve, reject); },
+    func: function(resolve, reject) { cordova.plugins.http.patch('https://self-signed.badssl.com/', { test: 'testString' }, {}, resolve, reject); },
     validationFunc: function(driver, result) {
       result.type.should.be.equal('rejected');
       result.data.should.include({ status: 405 });
@@ -115,7 +115,7 @@ const tests = [
     description: 'should accept bad cert (DELETE)',
     expected: 'rejected: {"status":405, ... // will be rejected because DELETE is not allowed',
     before: helpers.acceptAllCerts,
-    func: function(resolve, reject) { cordova.plugin.http.delete('https://self-signed.badssl.com/', {}, {}, resolve, reject); },
+    func: function(resolve, reject) { cordova.plugins.http.delete('https://self-signed.badssl.com/', {}, {}, resolve, reject); },
     validationFunc: function(driver, result) {
       result.type.should.be.equal('rejected');
       result.data.should.include({ status: 405 });
@@ -124,7 +124,7 @@ const tests = [
     description: 'should fetch data from http://httpbin.org/ (GET)',
     expected: 'resolved: {"status":200, ...',
     before: helpers.acceptAllCerts,
-    func: function(resolve, reject) { cordova.plugin.http.get('http://httpbin.org/', {}, {}, resolve, reject); },
+    func: function(resolve, reject) { cordova.plugins.http.get('http://httpbin.org/', {}, {}, resolve, reject); },
     validationFunc: function(driver, result) {
       result.type.should.be.equal('resolved');
       result.data.should.include({ status: 200 });
@@ -133,7 +133,7 @@ const tests = [
     description: 'should send JSON object correctly (POST)',
     expected: 'resolved: {"status": 200, "data": "{\\"json\\":\\"test\\": \\"testString\\"}\" ...',
     before: helpers.setJsonSerializer,
-    func: function(resolve, reject) { cordova.plugin.http.post('http://httpbin.org/anything', { test: 'testString' }, {}, resolve, reject); },
+    func: function(resolve, reject) { cordova.plugins.http.post('http://httpbin.org/anything', { test: 'testString' }, {}, resolve, reject); },
     validationFunc: function(driver, result) {
       result.type.should.be.equal('resolved');
       JSON.parse(result.data.data).json.should.eql({ test: 'testString' });
@@ -142,7 +142,7 @@ const tests = [
     description: 'should send JSON object correctly (PUT)',
     expected: 'resolved: {"status": 200, "data": "{\\"json\\":\\"test\\": \\"testString\\"}\" ...',
     before: helpers.setJsonSerializer,
-    func: function(resolve, reject) { cordova.plugin.http.put('http://httpbin.org/anything', { test: 'testString' }, {}, resolve, reject); },
+    func: function(resolve, reject) { cordova.plugins.http.put('http://httpbin.org/anything', { test: 'testString' }, {}, resolve, reject); },
     validationFunc: function(driver, result) {
       result.type.should.be.equal('resolved');
       JSON.parse(result.data.data).json.should.eql({ test: 'testString' });
@@ -151,7 +151,7 @@ const tests = [
     description: 'should send JSON object correctly (PATCH)',
     expected: 'resolved: {"status": 200, "data": "{\\"json\\":\\"test\\": \\"testString\\"}\" ...',
     before: helpers.setJsonSerializer,
-    func: function(resolve, reject) { cordova.plugin.http.patch('http://httpbin.org/anything', { test: 'testString' }, {}, resolve, reject); },
+    func: function(resolve, reject) { cordova.plugins.http.patch('http://httpbin.org/anything', { test: 'testString' }, {}, resolve, reject); },
     validationFunc: function(driver, result) {
       result.type.should.be.equal('resolved');
       JSON.parse(result.data.data).json.should.eql({ test: 'testString' });
@@ -160,7 +160,7 @@ const tests = [
     description: 'should send JSON array correctly (POST) #26',
     expected: 'resolved: {"status": 200, "data": "[ 1, 2, 3 ]\" ...',
     before: helpers.setJsonSerializer,
-    func: function(resolve, reject) { cordova.plugin.http.post('http://httpbin.org/anything', [ 1, 2, 3 ], {}, resolve, reject); },
+    func: function(resolve, reject) { cordova.plugins.http.post('http://httpbin.org/anything', [ 1, 2, 3 ], {}, resolve, reject); },
     validationFunc: function(driver, result) {
       result.type.should.be.equal('resolved');
       JSON.parse(result.data.data).json.should.eql([ 1, 2, 3 ]);
@@ -169,7 +169,7 @@ const tests = [
     description: 'should send JSON array correctly (PUT) #26',
     expected: 'resolved: {"status": 200, "data": "[ 1, 2, 3 ]\" ...',
     before: helpers.setJsonSerializer,
-    func: function(resolve, reject) { cordova.plugin.http.put('http://httpbin.org/anything', [ 1, 2, 3 ], {}, resolve, reject); },
+    func: function(resolve, reject) { cordova.plugins.http.put('http://httpbin.org/anything', [ 1, 2, 3 ], {}, resolve, reject); },
     validationFunc: function(driver, result) {
       result.type.should.be.equal('resolved');
       JSON.parse(result.data.data).json.should.eql([ 1, 2, 3 ]);
@@ -178,7 +178,7 @@ const tests = [
     description: 'should send JSON array correctly (PATCH) #26',
     expected: 'resolved: {"status": 200, "data": "[ 1, 2, 3 ]\" ...',
     before: helpers.setJsonSerializer,
-    func: function(resolve, reject) { cordova.plugin.http.patch('http://httpbin.org/anything', [ 1, 2, 3 ], {}, resolve, reject); },
+    func: function(resolve, reject) { cordova.plugins.http.patch('http://httpbin.org/anything', [ 1, 2, 3 ], {}, resolve, reject); },
     validationFunc: function(driver, result) {
       result.type.should.be.equal('resolved');
       result.data.data.should.be.a('string');
@@ -188,7 +188,7 @@ const tests = [
     description: 'should send url encoded data correctly (POST) #41',
     expected: 'resolved: {"status": 200, "data": "{\\"form\\":\\"test\\": \\"testString\\"}\" ...',
     before: helpers.setUrlEncodedSerializer,
-    func: function(resolve, reject) { cordova.plugin.http.post('http://httpbin.org/anything', { test: 'testString' }, {}, resolve, reject); },
+    func: function(resolve, reject) { cordova.plugins.http.post('http://httpbin.org/anything', { test: 'testString' }, {}, resolve, reject); },
     validationFunc: function(driver, result) {
       result.type.should.be.equal('resolved');
       JSON.parse(result.data.data).form.should.eql({ test: 'testString' });
@@ -197,7 +197,7 @@ const tests = [
     description: 'should send url encoded data correctly (PUT)',
     expected: 'resolved: {"status": 200, "data": "{\\"form\\":\\"test\\": \\"testString\\"}\" ...',
     before: helpers.setUrlEncodedSerializer,
-    func: function(resolve, reject) { cordova.plugin.http.put('http://httpbin.org/anything', { test: 'testString' }, {}, resolve, reject); },
+    func: function(resolve, reject) { cordova.plugins.http.put('http://httpbin.org/anything', { test: 'testString' }, {}, resolve, reject); },
     validationFunc: function(driver, result) {
       result.type.should.be.equal('resolved');
       JSON.parse(result.data.data).form.should.eql({ test: 'testString' });
@@ -206,7 +206,7 @@ const tests = [
     description: 'should send url encoded data correctly (PATCH)',
     expected: 'resolved: {"status": 200, "data": "{\\"form\\":\\"test\\": \\"testString\\"}\" ...',
     before: helpers.setUrlEncodedSerializer,
-    func: function(resolve, reject) { cordova.plugin.http.patch('http://httpbin.org/anything', { test: 'testString' }, {}, resolve, reject); },
+    func: function(resolve, reject) { cordova.plugins.http.patch('http://httpbin.org/anything', { test: 'testString' }, {}, resolve, reject); },
     validationFunc: function(driver, result) {
       result.type.should.be.equal('resolved');
       JSON.parse(result.data.data).form.should.eql({ test: 'testString' });
@@ -214,7 +214,7 @@ const tests = [
   },{
     description: 'should resolve correct URL after redirect (GET) #33',
     expected: 'resolved: {"status": 200, url: "http://httpbin.org/anything", ...',
-    func: function(resolve, reject) { cordova.plugin.http.get('http://httpbin.org/redirect-to?url=http://httpbin.org/anything', {}, {}, resolve, reject); },
+    func: function(resolve, reject) { cordova.plugins.http.get('http://httpbin.org/redirect-to?url=http://httpbin.org/anything', {}, {}, resolve, reject); },
     validationFunc: function(driver, result) {
       result.type.should.be.equal('resolved');
       result.data.url.should.be.equal('http://httpbin.org/anything');
@@ -226,7 +226,7 @@ const tests = [
       var sourceUrl = 'http://httpbin.org/xml';
       var targetPath = cordova.file.cacheDirectory + 'test.xml';
 
-      cordova.plugin.http.downloadFile(sourceUrl, {}, {}, targetPath, function(entry) {
+      cordova.plugins.http.downloadFile(sourceUrl, {}, {}, targetPath, function(entry) {
         helpers.getWithXhr(function(content) {
           resolve({
             sourceUrl: sourceUrl,
@@ -253,7 +253,7 @@ const tests = [
       var targetUrl = 'http://httpbin.org/post';
 
       helpers.writeToFile(function() {
-        cordova.plugin.http.uploadFile(targetUrl, {}, {}, sourcePath, fileName, resolve, reject);
+        cordova.plugins.http.uploadFile(targetUrl, {}, {}, sourcePath, fileName, resolve, reject);
       }, fileName, fileContent);
     },
     validationFunc: function(driver, result) {
@@ -272,7 +272,7 @@ const tests = [
     description: 'should encode HTTP array params correctly (GET) #45',
     expected: 'resolved: {"status": 200, "data": "{\\"url\\":\\"http://httpbin.org/get?myArray[]=val1&myArray[]=val2&myArray[]=val3\\"}\" ...',
     func: function(resolve, reject) {
-      cordova.plugin.http.get('http://httpbin.org/get', { myArray: [ 'val1', 'val2', 'val3' ], myString: 'testString' }, {}, resolve, reject);
+      cordova.plugins.http.get('http://httpbin.org/get', { myArray: [ 'val1', 'val2', 'val3' ], myString: 'testString' }, {}, resolve, reject);
     },
     validationFunc: function(driver, result) {
       result.type.should.be.equal('resolved');
@@ -287,7 +287,7 @@ const tests = [
     description: 'should reject non-string values in local header object #54',
     expected: 'rejected: {"status": 0, "error": "advanced-http: header values must be strings" ...',
     func: function(resolve, reject) {
-      cordova.plugin.http.get('http://httpbin.org/get', {}, { myTestHeader: 1 }, resolve, reject);
+      cordova.plugins.http.get('http://httpbin.org/get', {}, { myTestHeader: 1 }, resolve, reject);
     },
     validationFunc: function(driver, result) {
       result.type.should.be.equal('rejected');
@@ -297,7 +297,7 @@ const tests = [
     description: 'should throw an error while setting non-string value as global header #54',
     expected: 'throwed: "advanced-http: header values must be strings"',
     func: function(resolve, reject) {
-      cordova.plugin.http.setHeader('myTestHeader', 2);
+      cordova.plugins.http.setHeader('myTestHeader', 2);
     },
     validationFunc: function(driver, result) {
       result.type.should.be.equal('throwed');
@@ -307,7 +307,7 @@ const tests = [
     description: 'should accept content-type "application/xml" #58',
     expected: 'resolved: {"status": 200, ...',
     func: function(resolve, reject) {
-      cordova.plugin.http.get('http://httpbin.org/xml', {}, {}, resolve, reject);
+      cordova.plugins.http.get('http://httpbin.org/xml', {}, {}, resolve, reject);
     },
     validationFunc: function(driver, result) {
       result.type.should.be.equal('resolved');

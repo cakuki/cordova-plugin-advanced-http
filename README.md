@@ -30,7 +30,7 @@ cordova plugin add @ckk/cordova-plugin-advanced-http
 
 ## Usage
 
-This plugin registers a global object located at `cordova.plugin.http`.
+This plugin registers a global object located at `cordova.plugins.http`.
 
 
 ## Synchronous Functions
@@ -39,52 +39,52 @@ This plugin registers a global object located at `cordova.plugin.http`.
 This returns an object representing a basic HTTP Authorization header of the form `{'Authorization': 'Basic base64encodedusernameandpassword'}`
 
 ```js
-var header = cordova.plugin.http.getBasicAuthHeader('user', 'password');
+var header = cordova.plugins.http.getBasicAuthHeader('user', 'password');
 ```
 
 ### useBasicAuth
 This sets up all future requests to use Basic HTTP authentication with the given username and password.
 
 ```js
-cordova.plugin.http.useBasicAuth('user', 'password');
+cordova.plugins.http.useBasicAuth('user', 'password');
 ```
 
 ### setHeader
 Set a header for all future requests to a specified host. Takes a hostname, a header and a value (must be a string value).
 
 ```js
-cordova.plugin.http.setHeader('Hostname', 'Header', 'Value');
+cordova.plugins.http.setHeader('Hostname', 'Header', 'Value');
 ```
 
 You can also define headers used for all hosts by using wildcard character "\*" or providing only two params.
 
 ```js
-cordova.plugin.http.setHeader('*', 'Header', 'Value');
-cordova.plugin.http.setHeader('Header', 'Value');
+cordova.plugins.http.setHeader('*', 'Header', 'Value');
+cordova.plugins.http.setHeader('Header', 'Value');
 ```
 
 The hostname also includes the port number. If you define a header for `www.example.com` it will not match following URL `http://www.example.com:8080`.
 
 ```js
 // will match http://www.example.com/...
-cordova.plugin.http.setHeader('www.example.com', 'Header', 'Value');
+cordova.plugins.http.setHeader('www.example.com', 'Header', 'Value');
 
 // will match http://www.example.com:8080/...
-cordova.plugin.http.setHeader('www.example.com:8080', 'Header', 'Value');
+cordova.plugins.http.setHeader('www.example.com:8080', 'Header', 'Value');
 ```
 
 ### disableRedirect
 If set to `true`, it won't follow redirects automatically. This is a global setting.
 
 ```js
-cordova.plugin.http.disableRedirect(true);
+cordova.plugins.http.disableRedirect(true);
 ```
 
 ### setDataSerializer
 Set the data serializer which will be used for all future PATCH, POST and PUT requests. Takes a string representing the name of the serializer.
 
 ```js
-cordova.plugin.http.setDataSerializer('urlencoded');
+cordova.plugins.http.setDataSerializer('urlencoded');
 ```
 
 You can choose one of these two:
@@ -97,7 +97,7 @@ Caution: `urlencoded` does not support serializing deep structures whereas `json
 Set how long to wait for a request to respond, in seconds.
 
 ```js
-cordova.plugin.http.setRequestTimeout(5.0);
+cordova.plugins.http.setRequestTimeout(5.0);
 ```
 
 ## Asynchronous Functions
@@ -111,7 +111,7 @@ To use SSL pinning you must include at least one .cer SSL certificate in your ap
 As an alternative, you can store your .cer files in the www/certificates folder.
 
 ```js
-cordova.plugin.http.enableSSLPinning(true, function() {
+cordova.plugins.http.enableSSLPinning(true, function() {
   console.log('success!');
 }, function() {
   console.log('error :(');
@@ -122,7 +122,7 @@ cordova.plugin.http.enableSSLPinning(true, function() {
 Accept all SSL certificates.  Or disable accepting all certificates.  This defaults to false.
 
 ```js
-cordova.plugin.http.acceptAllCerts(true, function() {
+cordova.plugins.http.acceptAllCerts(true, function() {
   console.log('success!');
 }, function() {
   console.log('error :(');
@@ -153,7 +153,7 @@ Here's a quick example:
 Most apis will return JSON meaning you'll want to parse the data like in the example below:
 
 ```js
-cordova.plugin.http.post('https://google.com/', {
+cordova.plugins.http.post('https://google.com/', {
   id: 12,
   message: 'test'
 }, { Authorization: 'OAuth2: token' }, function(response) {
@@ -194,7 +194,7 @@ Here's a quick example:
 Execute a GET request.  Takes a URL, parameters, and headers.  See the [post](#post) documentation for details on what is returned on success and failure.
 
 ```js
-cordova.plugin.http.get('https://google.com/', {
+cordova.plugins.http.get('https://google.com/', {
   id: 12,
   message: 'test'
 }, { Authorization: 'OAuth2: token' }, function(response) {
@@ -220,7 +220,7 @@ Execute a HEAD request.  Takes a URL, parameters, and headers.  See the [post](#
 Uploads a file saved on the device.  Takes a URL, parameters, headers, filePath, and the name of the parameter to pass the file along as.  See the [post](#post) documentation for details on what is returned on success and failure.
 
 ```js
-cordova.plugin.http.uploadFile("https://google.com/", {
+cordova.plugins.http.uploadFile("https://google.com/", {
     id: 12,
     message: 'test'
 }, { Authorization: 'OAuth2: token' }, 'file:///somepicture.jpg', 'picture', function(response) {
@@ -234,7 +234,7 @@ cordova.plugin.http.uploadFile("https://google.com/", {
 Downloads a file and saves it to the device.  Takes a URL, parameters, headers, and a filePath.  See [post](#post) documentation for details on what is returned on failure.  On success this function returns a cordova [FileEntry object](http://cordova.apache.org/docs/en/3.3.0/cordova_file_file.md.html#FileEntry).
 
 ```js
-cordova.plugin.http.downloadFile("https://google.com/", {
+cordova.plugins.http.downloadFile("https://google.com/", {
   id: 12,
   message: 'test'
 }, { Authorization: 'OAuth2: token' }, 'file:///somepicture.jpg', function(entry) {

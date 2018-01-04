@@ -19,7 +19,6 @@ describe('Advanced HTTP www interface', function() {
     global.btoa = decoded => new Buffer(decoded).toString('base64');
 
     mock('cordova/exec', noop);
-    mock(`${PLUGIN_ID}.angular-integration`, { registerService: noop });
     loadHttp();
   });
 
