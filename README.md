@@ -1,15 +1,15 @@
 Cordova Advanced HTTP
 =====================
-[![npm version](https://badge.fury.io/js/cordova-plugin-advanced-http.svg)](https://badge.fury.io/js/cordova-plugin-advanced-http)
-[![downloads/month](https://img.shields.io/npm/dm/cordova-plugin-advanced-http.svg)](https://www.npmjs.com/package/cordova-plugin-advanced-http)
+[![npm version](https://badge.fury.io/js/%40ckk%2Fcordova-plugin-advanced-http.svg)](https://badge.fury.io/js/%40ckk%2Fcordova-plugin-advanced-http)
+[![downloads/month](https://img.shields.io/npm/dm/@ckk/cordova-plugin-advanced-http.svg)](https://www.npmjs.com/package/@ckk/cordova-plugin-advanced-http)
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.png)](https://opensource.org/licenses/mit-license.php)
-[![Build Status](https://travis-ci.org/silkimen/cordova-plugin-advanced-http.svg?branch=master)](https://travis-ci.org/silkimen/cordova-plugin-advanced-http)
+[![Build Status](https://travis-ci.org/cakuki/cordova-plugin-advanced-http.svg?branch=master)](https://travis-ci.org/cakuki/cordova-plugin-advanced-http)
 
 
-Cordova / Phonegap plugin for communicating with HTTP servers.  Supports iOS and Android.
-This is a fork of [Wymsee's Cordova-HTTP plugin](https://github.com/wymsee/cordova-HTTP).
+Cordova plugin for communicating with HTTP servers.  Supports iOS and Android.
+This is a fork of [silkimen's Cordova Advanced HTTP plugin](https://github.com/silkimen/cordova-plugin-advanced-http).
 
-## Advantages over Javascript requests
+## Advantages over JavaScript requests
 
  - Background threading - all requests are done in a background thread.
  - Handling of HTTP code 401 - read more at [Issue CB-2415](https://issues.apache.org/jira/browse/CB-2415).
@@ -25,9 +25,7 @@ The plugin conforms to the Cordova plugin specification, it can be installed
 using the Cordova / Phonegap command line interface.
 
 ```shell
-phonegap plugin add cordova-plugin-advanced-http
-
-cordova plugin add cordova-plugin-advanced-http
+cordova plugin add @ckk/cordova-plugin-advanced-http
 ```
 
 ## Usage
