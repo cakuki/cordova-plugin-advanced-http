@@ -36,7 +36,6 @@ var pluginId = module.id.slice(0, module.id.indexOf('.'));
 var validSerializers = ['urlencoded', 'json'];
 
 var exec = require('cordova/exec');
-var angularIntegration = require(pluginId +'.angular-integration');
 
 var MANDATORY_SUCCESS = 'advanced-http: missing mandatory "onSuccess" callback function';
 var MANDATORY_FAIL = 'advanced-http: missing mandatory "onFail" callback function';
@@ -292,5 +291,4 @@ var http = {
     }
 };
 
-angularIntegration.registerService(http);
 module.exports = http;
