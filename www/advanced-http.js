@@ -37,11 +37,9 @@ var validSerializers = ['urlencoded', 'json'];
 
 var exec = require('cordova/exec');
 var angularIntegration = require(pluginId +'.angular-integration');
-var cookieHandler = require(pluginId + '.cookie-handler');
 
 var MANDATORY_SUCCESS = 'advanced-http: missing mandatory "onSuccess" callback function';
 var MANDATORY_FAIL = 'advanced-http: missing mandatory "onFail" callback function';
-var ADDING_COOKIES_NOT_SUPPORTED = 'advanced-http: "setHeader" does not support adding cookies, please use "setCookie" function instead';
 var HEADER_VALUE_MUST_BE_STRING = 'advanced-http: header values must be strings';
 
 // Thanks Mozilla: https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding#The_.22Unicode_Problem.22
@@ -100,18 +98,6 @@ function checkSerializer(serializer) {
     return serializer[0];
 }
 
-function resolveCookieString(headers) {
-    var keys = Object.keys(headers || {});
-
-    for (var i = 0; i < keys.length; ++i) {
-        if (keys[i].match(/^set-cookie$/i)) {
-            return headers[keys[i]];
-        }
-    }
-
-    return null;
-}
-
 function createFileEntry(rawEntry) {
     var entry = new (require('cordova-plugin-file.FileEntry'))();
 
@@ -125,21 +111,10 @@ function createFileEntry(rawEntry) {
     return entry;
 }
 
-function injectCookieHandler(url, cb) {
-    return function(response) {
-        cookieHandler.setCookieFromString(url, resolveCookieString(response.headers));
-        cb(response);
-    }
-}
-
 function injectFileEntryHandler(cb) {
     return function(response) {
         cb(createFileEntry(response.file));
     }
-}
-
-function getCookieHeader(url) {
-    return { Cookie: cookieHandler.getCookieString(url) };
 }
 
 function getMatchingHostHeaders(url, headersList) {
@@ -155,7 +130,6 @@ function getMergedHeaders(url, requestHeaders, predefinedHeaders) {
   var mergedHeaders = mergeHeaders(globalHeaders, hostHeaders);
 
   mergedHeaders = mergeHeaders(mergedHeaders, requestHeaders);
-  mergedHeaders = mergeHeaders(mergedHeaders, getCookieHeader(url));
 
   return mergedHeaders;
 }
@@ -193,10 +167,6 @@ var http = {
             value = arguments[2];
         }
 
-        if (header.toLowerCase() === 'cookie') {
-          throw new Error(ADDING_COOKIES_NOT_SUPPORTED);
-        }
-
         if (typeof value !== 'string') {
           throw new Error(HEADER_VALUE_MUST_BE_STRING);
         }
@@ -206,18 +176,6 @@ var http = {
     },
     setDataSerializer: function (serializer) {
         this.dataSerializer = checkSerializer(serializer);
-    },
-    setCookie: function (url, cookie, options) {
-        cookieHandler.setCookie(url, cookie, options);
-    },
-    clearCookies: function () {
-        cookieHandler.clearCookies();
-    },
-    removeCookies: function (url, callback) {
-        cookieHandler.removeCookies(url, callback);
-    },
-    getCookieString: function (url) {
-        return cookieHandler.getCookieString(url);
     },
     setRequestTimeout: function (timeout) {
         this.timeoutInSeconds = timeout;
@@ -244,10 +202,7 @@ var http = {
           return onInvalidHeader(failure);
         }
 
-        var onSuccess = injectCookieHandler(url, success);
-        var onFail = injectCookieHandler(url, failure);
-
-        return exec(onSuccess, onFail, 'CordovaHttpPlugin', 'post', [url, data, this.dataSerializer, headers, this.timeoutInSeconds]);
+        return exec(success, failure, 'CordovaHttpPlugin', 'post', [url, data, this.dataSerializer, headers, this.timeoutInSeconds]);
     },
     get: function (url, params, headers, success, failure) {
         handleMissingCallbacks(success, failure);
@@ -259,10 +214,7 @@ var http = {
           return onInvalidHeader(failure);
         }
 
-        var onSuccess = injectCookieHandler(url, success);
-        var onFail = injectCookieHandler(url, failure);
-
-        return exec(onSuccess, onFail, 'CordovaHttpPlugin', 'get', [url, params, headers, this.timeoutInSeconds]);
+        return exec(success, failure, 'CordovaHttpPlugin', 'get', [url, params, headers, this.timeoutInSeconds]);
     },
     put: function (url, data, headers, success, failure) {
         handleMissingCallbacks(success, failure);
@@ -274,10 +226,7 @@ var http = {
           return onInvalidHeader(failure);
         }
 
-        var onSuccess = injectCookieHandler(url, success);
-        var onFail = injectCookieHandler(url, failure);
-
-        return exec(onSuccess, onFail, 'CordovaHttpPlugin', 'put', [url, data, this.dataSerializer, headers, this.timeoutInSeconds]);
+        return exec(success, failure, 'CordovaHttpPlugin', 'put', [url, data, this.dataSerializer, headers, this.timeoutInSeconds]);
     },
 
     patch: function (url, data, headers, success, failure) {
@@ -290,10 +239,7 @@ var http = {
           return onInvalidHeader(failure);
         }
 
-        var onSuccess = injectCookieHandler(url, success);
-        var onFail = injectCookieHandler(url, failure);
-
-        return exec(onSuccess, onFail, 'CordovaHttpPlugin', 'patch', [url, data, this.dataSerializer, headers, this.timeoutInSeconds]);
+        return exec(success, failure, 'CordovaHttpPlugin', 'patch', [url, data, this.dataSerializer, headers, this.timeoutInSeconds]);
     },
 
     delete: function (url, params, headers, success, failure) {
@@ -306,10 +252,7 @@ var http = {
           return onInvalidHeader(failure);
         }
 
-        var onSuccess = injectCookieHandler(url, success);
-        var onFail = injectCookieHandler(url, failure);
-
-        return exec(onSuccess, onFail, 'CordovaHttpPlugin', 'delete', [url, params, headers, this.timeoutInSeconds]);
+        return exec(success, failure, 'CordovaHttpPlugin', 'delete', [url, params, headers, this.timeoutInSeconds]);
     },
     head: function (url, params, headers, success, failure) {
         handleMissingCallbacks(success, failure);
@@ -321,10 +264,7 @@ var http = {
           return onInvalidHeader(failure);
         }
 
-        var onSuccess = injectCookieHandler(url, success);
-        var onFail = injectCookieHandler(url, failure);
-
-        return exec(onSuccess, onFail, 'CordovaHttpPlugin', 'head', [url, params, headers, this.timeoutInSeconds]);
+        return exec(success, failure, 'CordovaHttpPlugin', 'head', [url, params, headers, this.timeoutInSeconds]);
     },
     uploadFile: function (url, params, headers, filePath, name, success, failure) {
         handleMissingCallbacks(success, failure);
@@ -336,10 +276,7 @@ var http = {
           return onInvalidHeader(failure);
         }
 
-        var onSuccess = injectCookieHandler(url, success);
-        var onFail = injectCookieHandler(url, failure);
-
-        return exec(onSuccess, onFail, 'CordovaHttpPlugin', 'uploadFile', [url, params, headers, filePath, name, this.timeoutInSeconds]);
+        return exec(success, failure, 'CordovaHttpPlugin', 'uploadFile', [url, params, headers, filePath, name, this.timeoutInSeconds]);
     },
     downloadFile: function (url, params, headers, filePath, success, failure) {
         handleMissingCallbacks(success, failure);
@@ -351,10 +288,7 @@ var http = {
           return onInvalidHeader(failure);
         }
 
-        var onSuccess = injectCookieHandler(url, injectFileEntryHandler(success));
-        var onFail = injectCookieHandler(url, failure);
-
-        return exec(onSuccess, onFail, 'CordovaHttpPlugin', 'downloadFile', [url, params, headers, filePath, this.timeoutInSeconds]);
+        return exec(success, failure, 'CordovaHttpPlugin', 'downloadFile', [url, params, headers, filePath, this.timeoutInSeconds]);
     }
 };
 

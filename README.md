@@ -114,27 +114,6 @@ Set how long to wait for a request to respond, in seconds.
 cordova.plugin.http.setRequestTimeout(5.0);
 ```
 
-### getCookieString
-Returns saved cookies (as string) matching given URL.
-
-```js
-cordova.plugin.http.getCookieString(url);
-```
-
-### setCookie
-Add a custom cookie. Takes a URL, a cookie string and an options object. See [ToughCookie documentation](https://github.com/salesforce/tough-cookie#setcookiecookieorstring-currenturl-options-cberrcookie) for allowed options.
-
-```js
-cordova.plugin.http.setCookie(url, cookie, options);
-```
-
-### clearCookies
-Clear the cookie store.
-
-```js
-cordova.plugin.http.clearCookies();
-```
-
 ## Asynchronous Functions
 These functions all take success and error callbacks as their last 2 arguments.
 
@@ -166,13 +145,6 @@ cordova.plugin.http.acceptAllCerts(true, function() {
 
 ### validateDomainName
 This function was removed in v1.6.2. Domain name validation is disabled automatically when you enable "acceptAllCerts".
-
-### removeCookies
-Remove all cookies associated with a given URL.
-
-```js
-cordova.plugin.http.removeCookies(url, callback);
-```
 
 ### post<a name="post"></a>
 Execute a POST request.  Takes a URL, data, and headers.
@@ -297,7 +269,6 @@ This plugin utilizes some awesome open source libraries:
 
  - iOS - [AFNetworking](https://github.com/AFNetworking/AFNetworking) (MIT licensed)
  - Android - [http-request](https://github.com/kevinsawicki/http-request) (MIT licensed)
- - Cookie handling - [tough-cookie](https://github.com/salesforce/tough-cookie) (BSD-3-Clause licensed)
 
 We made a few modifications to the networking libraries.
 

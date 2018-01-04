@@ -1,6 +1,6 @@
 const hooks = {
   onBeforeEachTest: function(done) {
-    cordova.plugin.http.clearCookies();
+    cordova.plugin.http.headers = {};
     cordova.plugin.http.acceptAllCerts(false, done, done);
   }
 };
@@ -312,75 +312,6 @@ const tests = [
     validationFunc: function(driver, result) {
       result.type.should.be.equal('resolved');
       result.data.status.should.be.equal(200);
-    }
-  },{
-    description: 'should send programmatically set cookies correctly (GET)',
-    expected: 'resolved: {"status": 200, ...',
-    func: function(resolve, reject) {
-      cordova.plugin.http.setCookie('http://httpbin.org/get', 'myCookie=myValue');
-      cordova.plugin.http.setCookie('http://httpbin.org/get', 'mySecondCookie=mySecondValue');
-      cordova.plugin.http.get('http://httpbin.org/get', {}, {}, resolve, reject);
-    },
-    validationFunc: function(driver, result) {
-      result.type.should.be.equal('resolved');
-      result.data.data.should.be.a('string');
-
-      JSON
-        .parse(result.data.data)
-        .headers
-        .Cookie
-        .should.be.equal('myCookie=myValue; mySecondCookie=mySecondValue');
-    }
-  },{
-    description: 'should not send any cookies after running "clearCookies" (GET) #59',
-    expected: 'resolved: {"status": 200, "data": "{\"headers\": {\"Cookie\": \"\"...',
-    func: function(resolve, reject) {
-      cordova.plugin.http.setCookie('http://httpbin.org/get', 'myCookie=myValue');
-      cordova.plugin.http.setCookie('http://httpbin.org/get', 'mySecondCookie=mySecondValue');
-      cordova.plugin.http.clearCookies();
-      cordova.plugin.http.get('http://httpbin.org/get', {}, {}, resolve, reject);
-    },
-    validationFunc: function(driver, result) {
-      result.type.should.be.equal('resolved');
-      result.data.data.should.be.a('string');
-
-      JSON
-        .parse(result.data.data)
-        .headers
-        .Cookie
-        .should.be.equal('');
-    }
-  },{
-    description: 'should send programmatically set cookies correctly (DOWNLOAD) #57',
-    expected: 'resolved: {"content":{"cookies":{"myCookie":"myValue ...',
-    func: function(resolve, reject) {
-      var sourceUrl = 'http://httpbin.org/cookies';
-      var targetPath = cordova.file.cacheDirectory + 'cookies.json';
-
-      cordova.plugin.http.setCookie('http://httpbin.org/get', 'myCookie=myValue');
-      cordova.plugin.http.setCookie('http://httpbin.org/get', 'mySecondCookie=mySecondValue');
-
-      cordova.plugin.http.downloadFile(sourceUrl, {}, {}, targetPath, function(entry) {
-        helpers.getWithXhr(function(content) {
-          resolve({
-            sourceUrl: sourceUrl,
-            targetPath: targetPath,
-            fullPath: entry.fullPath,
-            name: entry.name,
-            content: content
-          });
-        }, targetPath);
-      }, reject);
-    },
-    validationFunc: function(driver, result) {
-      result.type.should.be.equal('resolved');
-      result.data.name.should.be.equal('cookies.json');
-      result.data.content.should.be.a('string');
-
-      var cookies = JSON.parse(result.data.content).cookies;
-
-      cookies.myCookie.should.be.equal('myValue');
-      cookies.mySecondCookie.should.be.equal('mySecondValue');
     }
   }
 ];

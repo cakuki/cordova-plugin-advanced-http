@@ -61,7 +61,6 @@
     "mocha": "4.0.0",
     "mock-require": "2.0.2",
     "mz": "2.7.0",
-    "umd-tough-cookie": "2.3.2",
     "wd": "1.4.1",
     "xml2js": "0.4.19"
   }

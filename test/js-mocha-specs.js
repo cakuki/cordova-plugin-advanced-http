@@ -20,7 +20,6 @@ describe('Advanced HTTP www interface', function() {
 
     mock('cordova/exec', noop);
     mock(`${PLUGIN_ID}.angular-integration`, { registerService: noop });
-    mock(`${PLUGIN_ID}.cookie-handler`, {});
     loadHttp();
   });
 
@@ -40,14 +39,9 @@ describe('Advanced HTTP www interface', function() {
   });
 
   it('resolves global headers correctly #24', () => {
-    mock(`${PLUGIN_ID}.cookie-handler`, {
-      getCookieString: () => 'fakeCookieString'
-    });
-
     mock('cordova/exec', (onSuccess, onFail, namespace, method, params) => {
       const headers = params[2];
       headers.should.eql({
-        Cookie: 'fakeCookieString',
         myKey: 'myValue'
       });
     });
@@ -59,14 +53,9 @@ describe('Advanced HTTP www interface', function() {
   });
 
   it('resolves host headers correctly (set without port number) #37', () => {
-    mock(`${PLUGIN_ID}.cookie-handler`, {
-      getCookieString: () => 'fakeCookieString'
-    });
-
     mock('cordova/exec', (onSuccess, onFail, namespace, method, params) => {
       const headers = params[2];
       headers.should.eql({
-        Cookie: 'fakeCookieString',
         myKey: 'myValue'
       });
     });
@@ -78,14 +67,9 @@ describe('Advanced HTTP www interface', function() {
   });
 
   it('resolves host headers correctly (set with port number) #37', () => {
-    mock(`${PLUGIN_ID}.cookie-handler`, {
-      getCookieString: () => 'fakeCookieString'
-    });
-
     mock('cordova/exec', (onSuccess, onFail, namespace, method, params) => {
       const headers = params[2];
       headers.should.eql({
-        Cookie: 'fakeCookieString',
         myKey: 'myValue'
       });
     });
@@ -97,14 +81,9 @@ describe('Advanced HTTP www interface', function() {
   });
 
   it('resolves request headers correctly', () => {
-    mock(`${PLUGIN_ID}.cookie-handler`, {
-      getCookieString: () => 'fakeCookieString'
-    });
-
     mock('cordova/exec', (onSuccess, onFail, namespace, method, params) => {
       const headers = params[2];
       headers.should.eql({
-        Cookie: 'fakeCookieString',
         myKey: 'myValue'
       });
     });
@@ -117,9 +96,5 @@ describe('Advanced HTTP www interface', function() {
   it('sets basic authentication header correctly #36', () => {
     http.useBasicAuth('name', 'pass');
     http.headers['*'].Authorization.should.equal('Basic bmFtZTpwYXNz');
-  });
-
-  it('throws an Error when you try to add a cookie by using "setHeader" #46', () => {
-    (function() { http.setHeader('*', 'cookie', 'value') }).should.throw();
   });
 });
