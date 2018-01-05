@@ -1,6 +1,6 @@
-# Contributing to Advanced HTTP Plugin
+# Contributing to Secure HTTP Plugin
 
-We'd love for you to contribute to our source code and to make Advanced HTTP even better than it is
+We'd love for you to contribute to our source code and to make Secure HTTP even better than it is
 today! Here are the guidelines we'd like you to follow:
 
  - [Issues and Bugs](#issue)
@@ -10,13 +10,13 @@ today! Here are the guidelines we'd like you to follow:
 ## <a name="issue"></a> Found an Issue?
 
 If you find a bug in the source code or a mistake in the documentation, you can help us by
-submitting an issue to our [GitHub Repository](https://github.com/silkimen/cordova-plugin-advanced-http/issues).
+submitting an issue to our [GitHub Repository](https://github.com/cakuki/cordova-plugin-secure-http/issues).
 Even better you can submit a Pull Request with a fix.
 
 ## <a name="feature"></a> Want a Feature?
 
 You can request a new feature by submitting an issue to our
-[GitHub Repository](https://github.com/silkimen/cordova-plugin-advanced-http/issues).
+[GitHub Repository](https://github.com/cakuki/cordova-plugin-secure-http/issues).
 If you would like to implement a new feature then consider what kind of change it is:
 
 * **Major Changes** that you wish to contribute to the project should be discussed first so that we
@@ -37,7 +37,7 @@ quickly:
 
 * **Overview of the Issue** - if an error is being thrown a non-minified stack trace helps
 * **Motivation for or Use Case** - explain why this is a bug for you
-* **Advanced HTTP Version(s)** - is it a regression?
+* **Secure HTTP Version(s)** - is it a regression?
 * **Operating System** - is this a problem with all supported OS or only specific ones?
 * **Related Issues** - has a similar issue been reported before?
 * **Suggest a Fix** - if you can't fix the bug yourself, perhaps you can point to what might be
@@ -48,7 +48,7 @@ quickly:
 ### Submitting a Pull Request
 Before you submit your pull request consider the following guidelines:
 
-* Search [GitHub](https://github.com/silkimen/cordova-plugin-advanced-http/pulls) for an open or
+* Search [GitHub](https://github.com/cakuki/cordova-plugin-secure-http/pulls) for an open or
   closed Pull Request that relates to your submission. You don't want to duplicate effort.
 * Make your changes in a new git branch:
 
@@ -63,7 +63,7 @@ Before you submit your pull request consider the following guidelines:
     git push origin my-fix-branch
     ```
 
-In GitHub, send a pull request to `cordova-plugin-advanced-http:master`.
+In GitHub, send a pull request to `cordova-plugin-secure-http:master`.
 If we suggest changes or the [CI build fails](#cibuild), then:
 
 * Make the required updates.
@@ -74,7 +74,7 @@ That's it! Thank you for your contribution!
 
 ### <a name="cibuild"></a> Pull Request Feedback
 You can always check the results of the latest CI builds on
-[Travis CI](https://travis-ci.org/silkimen/cordova-plugin-advanced-http/).
+[Travis CI](https://travis-ci.org/cakuki/cordova-plugin-secure-http/).
 You can use this information to inspect failing tests in your PR.
 
 ## Attribution

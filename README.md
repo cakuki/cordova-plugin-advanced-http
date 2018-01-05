@@ -1,9 +1,9 @@
-Cordova Advanced HTTP
-=====================
-[![npm version](https://badge.fury.io/js/%40ckk%2Fcordova-plugin-advanced-http.svg)](https://badge.fury.io/js/%40ckk%2Fcordova-plugin-advanced-http)
-[![downloads/month](https://img.shields.io/npm/dm/@ckk/cordova-plugin-advanced-http.svg)](https://www.npmjs.com/package/@ckk/cordova-plugin-advanced-http)
+Cordova Secure HTTP
+===================
+[![npm version](https://badge.fury.io/js/cordova-plugin-secure-http.svg)](https://badge.fury.io/js/cordova-plugin-secure-http)
+[![downloads/month](https://img.shields.io/npm/dm/cordova-plugin-secure-http.svg)](https://www.npmjs.com/package/cordova-plugin-secure-http)
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.png)](https://opensource.org/licenses/mit-license.php)
-[![Build Status](https://travis-ci.org/cakuki/cordova-plugin-advanced-http.svg?branch=master)](https://travis-ci.org/cakuki/cordova-plugin-advanced-http)
+[![Build Status](https://travis-ci.org/cakuki/cordova-plugin-secure-http.svg?branch=master)](https://travis-ci.org/cakuki/cordova-plugin-secure-http)
 
 
 Cordova plugin for communicating with HTTP servers.  Supports iOS and Android.
@@ -25,7 +25,7 @@ The plugin conforms to the Cordova plugin specification, it can be installed
 using the Cordova / Phonegap command line interface.
 
 ```shell
-cordova plugin add @ckk/cordova-plugin-advanced-http
+cordova plugin add cordova-plugin-secure-http
 ```
 
 ## Usage

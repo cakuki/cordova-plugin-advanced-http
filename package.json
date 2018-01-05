@@ -1,7 +1,7 @@
 {
-  "name": "@ckk/cordova-plugin-advanced-http",
-  "version": "1.9.2",
-  "description": "Cordova / Phonegap plugin for communicating with HTTP servers using SSL pinning",
+  "name": "cordova-plugin-secure-http",
+  "version": "1.0.0",
+  "description": "Cordova plugin for communicating with HTTP servers using SSL pinning",
   "scripts": {
     "testandroid": "./scripts/build-test-app.sh --android --emulator && ./scripts/test-app.sh --android --emulator",
     "testios": "./scripts/build-test-app.sh --ios --emulator && ./scripts/test-app.sh --ios --emulator",
@@ -11,7 +11,7 @@
     "release": "npm run test && ./scripts/release.sh"
   },
   "cordova": {
-    "id": "cordova-plugin-advanced-http",
+    "id": "cordova-plugin-secure-http",
     "platforms": [
       "ios",
       "android"
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cakuki/cordova-plugin-advanced-http.git"
+    "url": "git+https://github.com/cakuki/cordova-plugin-secure-http.git"
   },
   "keywords": [
     "cordova",
@@ -50,9 +50,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cakuki/cordova-plugin-advanced-http/issues"
+    "url": "https://github.com/cakuki/cordova-plugin-secure-http/issues"
   },
-  "homepage": "https://github.com/cakuki/cordova-plugin-advanced-http#readme",
+  "homepage": "https://github.com/cakuki/cordova-plugin-secure-http#readme",
   "devDependencies": {
     "chai": "4.1.2",
     "chai-as-promised": "7.1.1",

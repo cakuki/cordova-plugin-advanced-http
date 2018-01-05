@@ -2,7 +2,7 @@
 <widget id="com.ilkimen.http.demo" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>HttpDemo</name>
     <description>
-        A sample Apache Cordova application that demonstrates advanced HTTP plugin.
+        A sample Apache Cordova application that demonstrates secure HTTP plugin.
     </description>
     <author email="dev@cordova.apache.org" href="http://cordova.io">
         Sefa Ilkimen

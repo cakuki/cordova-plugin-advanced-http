@@ -35,9 +35,9 @@ var validSerializers = ['urlencoded', 'json'];
 
 var exec = require('cordova/exec');
 
-var MANDATORY_SUCCESS = 'advanced-http: missing mandatory "onSuccess" callback function';
-var MANDATORY_FAIL = 'advanced-http: missing mandatory "onFail" callback function';
-var HEADER_VALUE_MUST_BE_STRING = 'advanced-http: header values must be strings';
+var MANDATORY_SUCCESS = 'secure-http: missing mandatory "onSuccess" callback function';
+var MANDATORY_FAIL = 'secure-http: missing mandatory "onFail" callback function';
+var HEADER_VALUE_MUST_BE_STRING = 'secure-http: header values must be strings';
 
 // Thanks Mozilla: https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding#The_.22Unicode_Problem.22
 function b64EncodeUnicode(str) {
@@ -187,7 +187,7 @@ var http = {
         return exec(success, failure, 'CordovaHttpPlugin', 'disableRedirect', [disable]);
     },
     validateDomainName: function (validate, success, failure) {
-        failure('advanced-http: "validateDomainName" is no more supported, please see change log for further info');
+        failure('secure-http: "validateDomainName" is no more supported, please see change log for further info');
     },
     post: function (url, data, headers, success, failure) {
         handleMissingCallbacks(success, failure);

@@ -2,7 +2,7 @@
     "name": "com.ilkimen.http.demo",
     "displayName": "HttpDemo",
     "version": "1.0.0",
-    "description": "A sample Apache Cordova application that demonstrates advanced HTTP plugin.",
+    "description": "A sample Apache Cordova application that demonstrates secure HTTP plugin.",
     "main": "index.js",
     "scripts": {
         "build": "scripts/build.sh",

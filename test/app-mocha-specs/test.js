@@ -7,7 +7,7 @@ const serverConfig = require('./helpers/server');
 const testDefinitions = require('../app-test-definitions');
 const pkgjson = require('../../package.json');
 
-describe('Advanced HTTP', function() {
+describe('Secure HTTP', function() {
   const isDevice = process.argv.includes('--device');
   const isAndroid = process.argv.includes('--android');
   const targetInfo = { isDevice, isAndroid };

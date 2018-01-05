@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-advanced-http" version="1.9.2">
-  <name>Advanced HTTP plugin</name>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-secure-http" version="1.0.0">
+  <name>Secure HTTP plugin</name>
   <description>
-        Cordova / Phonegap plugin for communicating with HTTP servers using SSL pinning
+        Cordova plugin for communicating with HTTP servers using SSL pinning
 	 </description>
   <engines>
     <engine name="cordova" version=">=4.0.0"/>
   </engines>
   <dependency id="cordova-plugin-file" version=">=2.0.0"/>
-  <js-module src="www/advanced-http.js" name="http">
+  <js-module src="www/secure-http.js" name="http">
     <clobbers target="cordova.plugins.http"/>
   </js-module>
   <platform name="ios">

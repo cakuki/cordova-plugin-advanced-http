@@ -3,13 +3,13 @@ const mock = require('mock-require');
 const path = require('path');
 
 const should = chai.should();
-const PLUGIN_ID = path.resolve(__dirname, '..', 'www', 'advanced-http');
+const PLUGIN_ID = path.resolve(__dirname, '..', 'www', 'secure-http');
 
-describe('Advanced HTTP www interface', function() {
+describe('Secure HTTP www interface', function() {
   let http = {};
   const noop = () => { /* intentionally doing nothing */ };
   const loadHttp = () => {
-    http = mock.reRequire('../www/advanced-http');
+    http = mock.reRequire('../www/secure-http');
   };
 
   this.timeout(900000);

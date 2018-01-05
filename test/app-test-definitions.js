@@ -285,23 +285,23 @@ const tests = [
     }
   },{
     description: 'should reject non-string values in local header object #54',
-    expected: 'rejected: {"status": 0, "error": "advanced-http: header values must be strings" ...',
+    expected: 'rejected: {"status": 0, "error": "secure-http: header values must be strings" ...',
     func: function(resolve, reject) {
       cordova.plugins.http.get('http://httpbin.org/get', {}, { myTestHeader: 1 }, resolve, reject);
     },
     validationFunc: function(driver, result) {
       result.type.should.be.equal('rejected');
-      result.data.error.should.be.equal('advanced-http: header values must be strings');
+      result.data.error.should.be.equal('secure-http: header values must be strings');
     }
   },{
     description: 'should throw an error while setting non-string value as global header #54',
-    expected: 'throwed: "advanced-http: header values must be strings"',
+    expected: 'throwed: "secure-http: header values must be strings"',
     func: function(resolve, reject) {
       cordova.plugins.http.setHeader('myTestHeader', 2);
     },
     validationFunc: function(driver, result) {
       result.type.should.be.equal('throwed');
-      result.message.should.be.equal('advanced-http: header values must be strings');
+      result.message.should.be.equal('secure-http: header values must be strings');
     }
   },{
     description: 'should accept content-type "application/xml" #58',
